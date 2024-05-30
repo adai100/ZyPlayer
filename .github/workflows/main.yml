@@ -31,25 +31,12 @@ jobs:
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.access_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           # build_script_name: 'electron:prebuild'
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
-      - name: Upload Artifact (macOS)
-        uses: actions/upload-artifact@v4
-        with:
-          name: zyplayer-mac
-          path: ./dist/*-mac-*.dmg
-          if-no-files-found: ignore
-
-      - name: Upload Artifact (Windows)
-        uses: actions/upload-artifact@v4
-        with:
-          name: zyplayer-win
-          path: ./dist/*-win-*.exe
-          if-no-files-found: ignore
 
       - name: Upload Artifact (Linux AppImage)
         uses: actions/upload-artifact@v4
@@ -65,9 +52,4 @@ jobs:
           path: ./dist/*.deb
           if-no-files-found: ignore
 
-      - name: Upload Artifact (Linux rpm)
-        uses: actions/upload-artifact@v4
-        with:
-          name: zyplayer-linux-rpm
-          path: ./dist/*.rpm
-          if-no-files-found: ignore
+
